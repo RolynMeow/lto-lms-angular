@@ -1,4 +1,5 @@
 import { Lesson } from "./lesson";
+import { Progress } from "./progress";
 
 export interface Mdule {
     id: number;
@@ -6,4 +7,6 @@ export interface Mdule {
     description: string;
     image: string | null;  // Optional, based on your requirements
     lessons: Lesson[];
+    progress: Progress;
+    is_bookmarked: boolean;
 }

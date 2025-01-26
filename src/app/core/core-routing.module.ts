@@ -22,7 +22,7 @@ const routes: Routes = [
       },
       {
         path: 'module',
-        component: ModulesComponent
+        loadChildren: () => import('./pages/modules/modules.module').then(m => m.ModulesModule),
       },
       {
         path: 'profile',
