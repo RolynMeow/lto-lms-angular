@@ -1,0 +1,8 @@
+.truncate-two-lines {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2; /* Limit to 2 lines */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%; /* Ensure it does not exceed container */
+}

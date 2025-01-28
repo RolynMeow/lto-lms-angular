@@ -1,1 +1,32 @@
-<p>quiz works!</p>
+<h1 class="fw-bold font-monospace px-5">Quizzes</h1>
+<div class="d-flex flex-column justify-content-around gap-5 mx-5">
+    <div
+        *ngFor="let quiz of quizzes$ | async; let i = index" 
+        class="card card-xxl-stretch rounded-4 user-select-none"
+        style="height: 250px;"
+    >
+        <div class="card-body p-3">
+            <div class="d-flex flex-row justify-content-center align-items-center h-100 gap-3">
+                <div class="col-4 d-flex justify-content-center align-items-center mx-4">
+                    <img [src]="'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaKl3SXWtGi6MYxpJElmY8smMg3I0vtZYPVA&s'" height="175" width="175" alt="Module Image">
+                </div>
+                <div class="col-4 d-flex flex-column">
+                    <h2 class="card-title fw-bold truncate-two-lines">{{quiz.title}}</h2>
+                    <div class="text-truncate lh-base w-75" style=" height: 75px;">
+                        {{quiz.description}}
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="d-flex flex-column justify-content-center align-items-center">
+                        <span class="fs-2">
+                            {{ quiz.questions.length }} <span class="text-secondary fs-4">items</span>
+                        </span>
+                        <button class="btn btn-primary" (click)="take(quiz.id, $event)">
+                            Take Quiz
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

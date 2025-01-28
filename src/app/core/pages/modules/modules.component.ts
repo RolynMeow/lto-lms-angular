@@ -19,7 +19,6 @@ export class ModulesComponent implements OnInit {
   modules$!: Observable<Mdule[]>;
 
   constructor(
-    private quizService: QuizService,
     private moduleService: ModuleService,
     private router: Router
   ) { 
@@ -31,7 +30,6 @@ export class ModulesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.quizService.index().subscribe();
     this.moduleService.index().subscribe();
   }
 
@@ -62,7 +60,6 @@ export class ModulesComponent implements OnInit {
       }
     }
   }
-
 
   show(id: number, event: Event) {
     event.stopPropagation();
