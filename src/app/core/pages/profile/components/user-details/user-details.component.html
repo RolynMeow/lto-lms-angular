@@ -1,0 +1,96 @@
+<div class="card rounded-4" *ngIf="user$ | async as user">
+    <div class="card-body p-4">
+        <div class="d-flex align-items-center justify-content-between">
+            <div class="d-flex gap-4 align-items-start">
+                <img [src]="user.profile_picture ?? 'https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg'" height="75" width="75" alt="profile_picture">
+                <div class="d-flex flex-column">
+                    <span class="fs-3 fw-semibold">{{ user.first_name }} {{ user.last_name }}</span>
+                    <span class="fs-5 fw-medium">{{ user.address ?? 'No Address' }}</span>
+                </div>
+            </div>
+            <button class="btn btn-primary" (click)="view(content)">
+                Edit Profile
+            </button>
+        </div>
+    </div>
+</div>
+
+<ng-template #content let-modal>
+	<div class="modal-header">
+		<h4 class="modal-title" id="modal-basic-title">Profile Settings</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+	</div>
+    <form [formGroup]="userForm" (ngSubmit)="update()">
+        <div class="modal-body user-select-none">
+            <div class="container">
+                <div class="d-flex gap-4 align-items-start">
+                    <div class="d-flex flex-column align-items-center gap-3">
+                        <img [src]="this.profile_picture ?? 'https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg'" height="125" width="125" alt="profile_picture">
+                        <div class="d-flex justify-content-around align-items-center w-100">
+                            <span role="button" class="text-primary fs-7" (click)="view(picture, 'md')">Change</span>
+                            <span class="text-muted fs-7">|</span>
+                            <span role="button" class="text-danger fs-7" (click)="this.userForm.controls['profile_picture'].setValue(null)">Delete</span>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column">
+                        <span class="fs-3 fw-semibold">{{ first_name }} {{ last_name }}</span>
+                        <span class="fs-5 fw-medium">{{ address ?? 'No Address' }}</span>
+                    </div>
+                </div>
+                <div class="d-flex flex-column gap-3 my-4">
+                    <div class="d-flex flex-row gap-2">
+                        <label class="form-label w-25">Username:</label>
+                        <input type="string" class="form-control" 
+                            
+                            formControlName="username"
+                        >
+                    </div>
+                    <div class="d-flex flex-row gap-2">
+                        <label class="form-label w-25">First Name:</label>
+                        <input type="string" class="form-control" formControlName="first_name" [ngClass]="{ 'is-invalid' : userForm.controls['first_name'].invalid }" >
+                    </div>
+                    <div class="d-flex flex-row gap-2">
+                        <label class="form-label w-25">Last Name:</label>
+                        <input type="string" class="form-control" formControlName="last_name" [ngClass]="{ 'is-invalid' : userForm.controls['last_name'].invalid }" >
+                    </div>
+                    <div class="d-flex flex-row gap-2">
+                        <label class="form-label w-25">Email:</label>
+                        <input type="email" class="form-control" formControlName="email">
+                    </div>
+                    <div class="d-flex flex-row gap-2">
+                        <label class="form-label w-25">Password:</label>
+                        <input type="password" class="form-control" formControlName="password" placeholder="Set a new Password">
+                    </div>
+                    <div class="d-flex flex-row gap-2">
+                        <label class="form-label w-25">Address:</label>
+                        <input type="email" class="form-control" formControlName="address" placeholder="Specify Address" [ngClass]="{ 'is-invalid' : userForm.controls['address'].invalid }" >
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-outline-success" [disabled]="userForm.invalid" (click)="modal.close('Save click')">Save</button>
+        </div>
+    </form>
+</ng-template>
+
+
+<ng-template #picture let-modal>
+    <div class="modal-header">
+		<h4 class="modal-title" id="modal-basic-title">Profile Picture</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+	</div>
+	<div class="modal-body">
+		<form [formGroup]="userForm">
+            <div class="container">
+                <div class="d-flex flex-row gap-2">
+                    <label class="form-label">Profile Image Link:</label>
+                    <input type="string" class="form-control" formControlName="profile_picture" placeholder="Link">
+                </div>
+            </div>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-outline-secondary" (click)="modal.close('Save click')">Save</button>
+	</div>
+</ng-template>

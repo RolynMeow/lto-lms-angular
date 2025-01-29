@@ -48,4 +48,17 @@ export class QuizService {
     );
   }
 
+  submit(id: number, answers: any, duration: number): Observable<any> {
+    return this._http.post(`${this._env.url}/api/activities/submit/${id}`, {
+      answers,
+      duration
+    }).pipe(
+      catchError(err => {
+        console.error(err);
+        return throwError(err);
+      })
+    )
+
+  }
+
 }

@@ -9,7 +9,16 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { FeedbackComponent } from './pages/feedback/feedback.component';
 import { ModuleService } from './services/module.service';
 import { QuizService } from './services/quiz.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, provideHttpClient, withInterceptors } from '@angular/common/http';
+import { LeaderboardComponent } from './pages/profile/components/leaderboard/leaderboard.component';
+import { EngagementsComponent } from './pages/profile/components/engagements/engagements.component';
+import { ContentHoursComponent } from './pages/profile/components/content-hours/content-hours.component';
+import { ProfileService } from './services/profile.service';
+import { authInterceptor } from '../auth/utils/auth.interceptor';
+import { UserDetailsComponent } from './pages/profile/components/user-details/user-details.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NgApexchartsModule } from 'ng-apexcharts';
+import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -18,15 +27,21 @@ import { HttpClientModule } from '@angular/common/http';
     HomeComponent,
     ProfileComponent,
     FeedbackComponent,
+    LeaderboardComponent,
+    EngagementsComponent,
+    ContentHoursComponent,
+    UserDetailsComponent,
   ],
   imports: [
     CommonModule,
     CoreRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule,
+    NgApexchartsModule,
+    NgbNavModule
   ],
   providers: [
-    ModuleService,
-    QuizService
+    provideHttpClient(withInterceptors([authInterceptor]))
   ]
 })
 export class CoreModule { }

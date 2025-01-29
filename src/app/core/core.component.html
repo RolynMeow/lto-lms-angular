@@ -1,8 +1,16 @@
-<main class="d-flex flex-row gap-2 pt-5">
+<div class="d-flex w-100 justify-content-end align-items-center gap-2 pt-2" *ngIf="user$ | async as user">
+    <span class="text-black fs-5">
+        Hello, {{ user.username }}
+    </span>
+    <button class="btn btn-warning" (click)="logout()">
+        Logout
+    </button>
+</div>
+<main class="d-flex flex-row gap-2 pt-2">
     <div style="width: 120px;">
         <nav-bar></nav-bar>
     </div>
-    <div style="width: 100%;">
+    <div class="user-select-none" style="width: 100%;">
         <router-outlet></router-outlet>
     </div>
 </main>

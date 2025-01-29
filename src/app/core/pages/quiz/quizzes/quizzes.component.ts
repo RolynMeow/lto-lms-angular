@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Activity } from '../../../interfaces/activity';
 import { QuizService } from '../../../services/quiz.service';
 import { ActivatedRoute } from '@angular/router';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Question } from '../../../interfaces/question';
+import Swal from 'sweetalert2';
+import { TimeServiceService } from '../../../services/time.service';
 
 @Component({
   selector: 'app-quizzes',
@@ -12,24 +14,33 @@ import { Question } from '../../../interfaces/question';
   styleUrl: './quizzes.component.scss'
 })
 export class QuizzesComponent implements OnInit {
+  private timerSubscription!: Subscription;
   quiz$!: Observable<Activity | null>;
+  elapsedMinutes!: Observable<number>;
+
   questionsForm!: FormGroup;
   questionIndex: number = 0
   questionLength: number = 0;
+  id: number = 0;
+  duration: number = 0;
 
   constructor(
     private quizService: QuizService,
     private activatedRoute: ActivatedRoute,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private timeService: TimeServiceService
   ) { 
     this.quiz$ = this.quizService.quiz$;
+    this.elapsedMinutes = this.timeService.getElapsedTimeInMinutes();
+
+    this.timeService.getElapsedTimeInMinutes().subscribe(minutes => this.duration = minutes);
+
     this.questionsForm = this.fb.group({});
 
     this.quizService.quiz$.subscribe(quiz => {
       if (quiz) {
         quiz.questions.map(question => this.createQuestion(question));
         this.questionLength = quiz.questions.length;
-        console.log(this.questionsForm)
       }
     });
   } 
@@ -39,8 +50,10 @@ export class QuizzesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const id = this.activatedRoute.snapshot.paramMap.get('id');
-    this.quizService.show(+id!).subscribe();
+    this.id = +this.activatedRoute.snapshot.paramMap.get('id')!;
+    this.quizService.show(this.id).subscribe(() => {
+      this.timerSubscription = this.timeService.startTimer().subscribe();
+    });
   }
 
   select(index: number) {
@@ -62,7 +75,27 @@ export class QuizzesComponent implements OnInit {
   }
 
   submit() {
-    console.log(this.questionsForm.value)
+    if (this.questionsForm.invalid) {
+      Swal.fire({
+        title: "Are you sure? It looks like some questions haven't been answered yet.",
+        icon: 'warning',
+        confirmButtonText: 'Submit',
+        showDenyButton: true,
+        denyButtonText: 'No'
+      }).then(result => {
+        if (result.isConfirmed) {
+          this.quizService.submit(this.id, this.questionsForm.value, this.duration).subscribe();
+          Swal.close();
+        }
+        Swal.close();
+      });
+    } else {
+      this.quizService.submit(this.id, this.questionsForm.value, this.duration).subscribe();
+    }
+
+    if (this.timerSubscription) {
+      this.timerSubscription.unsubscribe(); // Clean up the subscription
+    }
   }
 
   private createQuestion(question: Question) {

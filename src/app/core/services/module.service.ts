@@ -44,6 +44,17 @@ export class ModuleService {
     );
   }
 
+  track(id: number, duration: number): Observable<any> {
+    return this._http.post(`${this._env.url}/api/lessons/track/${id}`, {
+      duration: duration
+    }).pipe(
+      catchError(err => {
+        console.error(err);
+        return throwError(err);
+      })
+    )
+  }
+
   bookmark(id: number): Observable<{message: string, value: boolean}> {
     return this._http.post<{message: string, value: boolean}>(`${this._env.url}/api/bookmark/${id}`, {}).pipe(
       tap(bookmark => {

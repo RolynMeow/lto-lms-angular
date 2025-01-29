@@ -6,7 +6,9 @@ import { QuizComponent } from './quiz.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { QuizzesComponent } from './quizzes/quizzes.component';
 import { ReactiveFormsModule } from '@angular/forms';
-
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { HttpClientModule, provideHttpClient, withInterceptors } from '@angular/common/http';
+import { authInterceptor } from '../../../auth/utils/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,12 @@ import { ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     QuizRoutingModule,
     NgApexchartsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SweetAlert2Module,
+    HttpClientModule
+  ],
+  providers: [
+    provideHttpClient(withInterceptors([authInterceptor]))
   ]
 })
 export class QuizModule { }

@@ -25,8 +25,9 @@
                 </div>
                 <hr class="my-4">
                 <div class="d-flex align-items-center justify-content-around">
-                    <div class="d-flex flex-column gap-2">
+                    <div class="d-flex flex-column">
                         <span class="fs-3 fw-bold font-monospace">Time Elapsed:</span>
+                        <span class="fs-5 fw-semibold">{{ elapsedMinutes | async }} minutes</span>
                     </div>
                     <img src="./assets/clock.png" width="65" height="65" class="img-fluid" alt="clock">
                 </div>

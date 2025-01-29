@@ -35,7 +35,7 @@ export class ModulesComponent implements OnInit {
 
   chartConfig(progress: Progress): ChartOptions {
     return {
-      series: [progress.total_lessons, progress.completed_lessons],
+      series: [progress.total_lessons-progress.completed_lessons, progress.completed_lessons],
       colors: ['#6c757d', '#28a745'],
       labels: ["Total", "Completed"],
       chart: {

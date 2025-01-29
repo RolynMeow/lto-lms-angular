@@ -8,7 +8,7 @@
             style="width: 300px; height: 470px;"
             [ngStyle]="{'background-color': i % 2 === 0 ? '#FFFAE7' : 'white'}"
             role="button"
-            (click)="view(lesson, content); index = i; lessons = module.lessons;"
+            (click)="view(lesson, content, i, module.lessons);"
         >
             <div class="card-body p-5">
                 <h2 class="card-title fw-bold truncate-two-lines">{{lesson.title}}</h2>
