@@ -18,7 +18,7 @@ import { authInterceptor } from '../auth/utils/auth.interceptor';
 import { UserDetailsComponent } from './pages/profile/components/user-details/user-details.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgApexchartsModule } from 'ng-apexcharts';
-import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbNavModule, NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -38,7 +38,8 @@ import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
     HttpClientModule,
     ReactiveFormsModule,
     NgApexchartsModule,
-    NgbNavModule
+    NgbNavModule,
+    NgbRatingModule
   ],
   providers: [
     provideHttpClient(withInterceptors([authInterceptor]))
