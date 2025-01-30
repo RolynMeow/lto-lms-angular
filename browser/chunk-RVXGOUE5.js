@@ -1,0 +1,1 @@
+import{E as t,fb as a,jb as c,o as n}from"./chunk-EDIASGHK.js";var l=(o,u)=>{let h=t(c),m=t(a),e=h.getToken(),r=o;return e&&(r=o.clone({setHeaders:{Authorization:`Bearer ${e}`}})),u(r).pipe(n(i=>{throw i.status===401&&m.navigate(["/auth/login"]),i}))};export{l as a};
