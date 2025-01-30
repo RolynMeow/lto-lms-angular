@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [master]
 
+permissions:
+  contents: write  # Gives GitHub Actions permission to push to gh-pages branch
+
 jobs:
   build:
     runs-on: ubuntu-latest
