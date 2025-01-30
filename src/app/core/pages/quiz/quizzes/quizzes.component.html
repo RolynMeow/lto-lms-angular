@@ -69,12 +69,16 @@
                         </div>
                         <p class="lh-base my-2">{{ question.question }}</p>
                         <form [formGroup]="questionsForm" class="my-2">
-                            <div class="d-flex flex-column flex-wrap">
-                                <div class="form-check" *ngFor="let choice of question.choices; let i = index">
-                                    <input class="form-check-input" type="radio" [formControlName]="(questionIndex+1).toString()" 
-                                    [value]="choice.id" [id]="'radio-' + i">
+                            <div class="d-flex flex-column flex-wrap" style="height: 275px;">
+                                <div class="form-check d-flex align-items-center gap-2" *ngFor="let choice of question.choices; let i = index">
+                                    <input class="form-check-input" type="radio" [formControlName]="question.id.toString()" [value]="choice.id" [id]="'radio-' + i">
                                     <label class="form-check-label" [for]="'radio-' + i">
-                                      {{ choice.context }}
+                                        <ng-container *ngIf="question.type === 'image'; else text">
+                                            <img width="75" height="75" [src]="'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaKl3SXWtGi6MYxpJElmY8smMg3I0vtZYPVA&s'" alt="context_image" >
+                                        </ng-container>
+                                        <ng-template #text>
+                                            {{ choice.context }}
+                                        </ng-template>
                                     </label>
                                 </div>
                             </div>

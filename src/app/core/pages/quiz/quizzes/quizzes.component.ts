@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { Activity } from '../../../interfaces/activity';
 import { QuizService } from '../../../services/quiz.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Question } from '../../../interfaces/question';
 import Swal from 'sweetalert2';
@@ -28,7 +28,8 @@ export class QuizzesComponent implements OnInit {
     private quizService: QuizService,
     private activatedRoute: ActivatedRoute,
     private fb: FormBuilder,
-    private timeService: TimeServiceService
+    private timeService: TimeServiceService,
+    private router: Router
   ) { 
     this.quiz$ = this.quizService.quiz$;
     this.elapsedMinutes = this.timeService.getElapsedTimeInMinutes();
@@ -92,6 +93,8 @@ export class QuizzesComponent implements OnInit {
     } else {
       this.quizService.submit(this.id, this.questionsForm.value, this.duration).subscribe();
     }
+
+    this.router.navigate(['/quiz']);
 
     if (this.timerSubscription) {
       this.timerSubscription.unsubscribe(); // Clean up the subscription
