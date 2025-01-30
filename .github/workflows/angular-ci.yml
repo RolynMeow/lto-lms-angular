@@ -23,7 +23,7 @@ jobs:
         run: npm ci
 
       - name: Build Angular App
-        run: npm run build --configuration=prod
+        run: ng build --configuration=prod --base-href=/dist/lto-lms-angular
 
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
