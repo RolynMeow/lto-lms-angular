@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "front-end": {
+    "lto-lms-angular": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
