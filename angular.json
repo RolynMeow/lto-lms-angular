@@ -83,10 +83,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "front-end:build:production"
+              "buildTarget": "lto-lms-angular:build:production"
             },
             "development": {
-              "buildTarget": "front-end:build:development"
+              "buildTarget": "lto-lms-angular:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -94,7 +94,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "front-end:build"
+            "buildTarget": "lto-lms-angular:build"
           }
         },
         "test": {
