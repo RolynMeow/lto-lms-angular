@@ -1,7 +1,7 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 import { AuthService } from '../../../../../auth/services/auth.service';
 import { last, Observable } from 'rxjs';
-import { User } from '../../../../../interfaces/user';
+import { Badge, User } from '../../../../../interfaces/user';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ProfileService } from '../../../../services/profile.service';
@@ -24,12 +24,15 @@ export class UserDetailsComponent implements OnInit {
     address: new FormControl(null, Validators.required),
   });
 
+  badges$!: Observable<Badge[]>;
+
   constructor(
     private authService: AuthService,
     private modalService: NgbModal,
     private profileService: ProfileService
   ) { 
     this.user$ = this.authService.user$;
+    this.badges$ = this.profileService.badges$;
     this.patch();
   }
 
@@ -50,6 +53,7 @@ export class UserDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.profileService.achievements().subscribe();
     this.userForm.controls['username'].disable();
     this.userForm.controls['email'].disable();  
   }

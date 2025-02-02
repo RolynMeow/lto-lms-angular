@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { Activity } from '../interfaces/activity';
-import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, finalize, Observable, tap, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,8 @@ export class QuizService {
   private _quiz: BehaviorSubject<Activity | null> = new BehaviorSubject<Activity | null>(null);
 
   constructor(
-    private _http: HttpClient
+    private _http: HttpClient,
+    private router: Router
   ) { }
 
   get quizzes$(): Observable<Activity[]> {
@@ -56,7 +58,8 @@ export class QuizService {
       catchError(err => {
         console.error(err);
         return throwError(err);
-      })
+      }),
+      finalize(() => this.router.navigate(['/quiz']))
     )
 
   }

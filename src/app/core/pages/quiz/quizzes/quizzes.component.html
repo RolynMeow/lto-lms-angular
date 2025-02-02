@@ -60,13 +60,14 @@
                     </button>
                 </div>
                 <div *ngIf="quiz.questions[questionIndex] as question" 
-                    class="card rounded-4" 
+                    class="card rounded-4 position-relative" 
                     style="background-color: #FFFAE7; max-height: 530px;"
                 >
                     <div class="card-body p-5">
                         <div *ngIf="question.image" class="d-flex justify-content-center align-items-center">
                             <img [src]=" question.image || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTaKl3SXWtGi6MYxpJElmY8smMg3I0vtZYPVA&s'" height="175" width="175" alt="Question Image">
                         </div>
+                        <span class="badge bg-dark fs-6 font-monospace"> {{ question.category | titlecase }} </span>
                         <p class="lh-base my-2">{{ question.question }}</p>
                         <form [formGroup]="questionsForm" class="my-2">
                             <div class="d-flex flex-column flex-wrap" style="height: 275px;">

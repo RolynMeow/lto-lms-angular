@@ -43,3 +43,9 @@ export interface User {
     history: History[];
     bookmarks: Bookmark[];
 }
+
+
+export interface Badge {
+  name: string;
+  image: string;
+}

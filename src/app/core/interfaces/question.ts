@@ -6,5 +6,6 @@ export interface Question {
     image: string;
     type: 'text' | 'image';  // Enum for the question type
     activity_id: number;
+    category: string;
     choices: Choice[];
 }

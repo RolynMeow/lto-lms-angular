@@ -1,11 +1,21 @@
 <div class="card rounded-4" *ngIf="user$ | async as user">
     <div class="card-body p-4">
         <div class="d-flex align-items-center justify-content-between">
-            <div class="d-flex gap-4 align-items-start">
+            <div class="d-flex gap-4 align-items-center">
                 <img [src]="user.profile_picture ?? 'https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg'" height="75" width="75" alt="profile_picture">
                 <div class="d-flex flex-column">
                     <span class="fs-3 fw-semibold">{{ user.first_name }} {{ user.last_name }}</span>
                     <span class="fs-5 fw-medium">{{ user.address ?? 'No Address' }}</span>
+                </div>
+                <div class="d-flex flex-row gap-2 flex-wrap">
+                    <img 
+                        *ngFor="let badge of badges$ | async"
+                        [src]="badge.image" 
+                        height="65" 
+                        width="65" 
+                        [alt]="badge.name"
+                        [title]="badge.name"
+                    >
                 </div>
             </div>
             <button class="btn btn-primary" (click)="view(content)">

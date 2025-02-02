@@ -4,7 +4,7 @@ import { environment } from '../../../environments/environment';
 import { Engagement, Rank, TimeData } from '../interfaces/rank';
 import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
 import { AuthService } from '../../auth/services/auth.service';
-import { Bookmark, User } from '../../interfaces/user';
+import { Badge, Bookmark, User } from '../../interfaces/user';
 import Swal from 'sweetalert2';
 import { ActivityHistory } from '../interfaces/activity-history';
 import { BookmarkHistory } from '../interfaces/bookmark';
@@ -19,6 +19,7 @@ export class ProfileService {
   private _timeData: BehaviorSubject<TimeData | null> = new BehaviorSubject<TimeData | null>(null);
   private _activityHistory: BehaviorSubject<ActivityHistory[]> = new BehaviorSubject<ActivityHistory[]>([]);
   private _bookmarks: BehaviorSubject<BookmarkHistory[]> = new BehaviorSubject<BookmarkHistory[]>([]);
+  private _badges: BehaviorSubject<Badge[]> = new BehaviorSubject<Badge[]>([]);
 
   get rank(): Rank | null {
     return this._rank.value;
@@ -47,6 +48,10 @@ export class ProfileService {
 
   get bookmarks$(): Observable<BookmarkHistory[]> {
     return this._bookmarks.asObservable();
+  }
+
+  get badges$(): Observable<Badge[]> {
+    return this._badges.asObservable();
   }
 
   leaderboard(): Observable<Rank> {
@@ -113,6 +118,17 @@ export class ProfileService {
     return this._http.get<BookmarkHistory[]>(`${this._env.url}/api/bookmark`).pipe(
       tap((res) => {
         this._bookmarks.next(res);
+      }),
+      catchError(err => {
+        return throwError(err);
+      })
+    );
+  }
+
+  achievements(): Observable<Badge[]> {
+    return this._http.get<Badge[]>(`${this._env.url}/api/user/achievements`).pipe(
+      tap((res) => {
+        this._badges.next(res);
       }),
       catchError(err => {
         return throwError(err);

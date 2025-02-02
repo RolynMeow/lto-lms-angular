@@ -87,14 +87,13 @@ export class QuizzesComponent implements OnInit {
         if (result.isConfirmed) {
           this.quizService.submit(this.id, this.questionsForm.value, this.duration).subscribe();
           Swal.close();
+        } else {
+          Swal.close();
         }
-        Swal.close();
       });
     } else {
       this.quizService.submit(this.id, this.questionsForm.value, this.duration).subscribe();
     }
-
-    this.router.navigate(['/quiz']);
 
     if (this.timerSubscription) {
       this.timerSubscription.unsubscribe(); // Clean up the subscription
