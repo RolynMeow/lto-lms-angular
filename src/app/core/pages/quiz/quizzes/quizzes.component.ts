@@ -54,30 +54,34 @@ export class QuizzesComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.id = +this.activatedRoute.snapshot.paramMap.get('id')!;
     this.quizService.show(this.id).subscribe(() => {
-      this.timerSubscription = this.timeService.startTimer(this.id === 3 ? 30 : undefined).subscribe();
+      this.timerSubscription = this.timeService.startTimer(this.id === 3 ? 30 : undefined).subscribe(res => 
+        {
+          if (this.id === 3) {
+            this.timeService.getRemainingTimeInMinutes().subscribe(minutes => {
+              if (minutes === 0) {
+                this.questionsForm.disable();
+                this.quizService.submit(this.id, this.questionsForm.value, this.duration).subscribe();
+                Swal.fire({
+                  title: "It looks like you've run out of time. If you still can't get the correct answers, you can always come back later!",
+                  icon: 'warning',
+                  confirmButtonText: 'Try Again',
+                  showDenyButton: false,
+                  allowEscapeKey: false,
+                  allowOutsideClick: false
+                }).then(result => {
+                  if (result.isConfirmed) {
+                    this.router.navigate(['/quiz']);
+                    Swal.close();
+                  }
+                });
+              }
+            });
+          }
+        }
+      );
     });
 
-    if (this.id === 3) {
-      this.timeService.getRemainingTimeInMinutes().subscribe(minutes => {
-        if (minutes === 0) {
-          this.questionsForm.disable();
-          this.quizService.submit(this.id, this.questionsForm.value, this.duration).subscribe();
-          Swal.fire({
-            title: "It looks like you've run out of time. If you still can't get the correct answers, you can always come back later!",
-            icon: 'warning',
-            confirmButtonText: 'Try Again',
-            showDenyButton: false,
-            allowEscapeKey: false,
-            allowOutsideClick: false
-          }).then(result => {
-            if (result.isConfirmed) {
-              this.router.navigate(['/quiz']);
-              Swal.close();
-            }
-          });
-        }
-      });
-    }
+    
   }
 
   select(index: number) {

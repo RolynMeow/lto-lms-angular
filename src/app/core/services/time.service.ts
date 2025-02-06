@@ -9,7 +9,7 @@ export class TimeServiceService {
   private durationInSeconds?: number; // Optional countdown duration
 
   private timeElapsed: BehaviorSubject<number> = new BehaviorSubject(0);
-  private timeRemaining: BehaviorSubject<number | null> = new BehaviorSubject<number | null>(0);
+  private timeRemaining: BehaviorSubject<number | null> = new BehaviorSubject<number | null>(null);
 
   private timer$ = interval(1000); // Emits every second
 
