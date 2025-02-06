@@ -59,7 +59,7 @@ export class UserDetailsComponent implements OnInit {
   }
 
   view(template: TemplateRef<any>, size: string = 'xl') {
-    const modal = this.modalService.open(template, { size: size });
+    const modal = this.modalService.open(template, { size: size, backdrop: 'static' });
     modal.result.then(
       (result) => {
       
