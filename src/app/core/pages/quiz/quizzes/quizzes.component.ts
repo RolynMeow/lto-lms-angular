@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { Activity } from '../../../interfaces/activity';
 import { QuizService } from '../../../services/quiz.service';
@@ -13,10 +13,11 @@ import { TimeServiceService } from '../../../services/time.service';
   templateUrl: './quizzes.component.html',
   styleUrl: './quizzes.component.scss'
 })
-export class QuizzesComponent implements OnInit {
+export class QuizzesComponent implements OnInit, OnDestroy {
   private timerSubscription!: Subscription;
   quiz$!: Observable<Activity | null>;
   elapsedMinutes!: Observable<number>;
+  remainingMinutes!: Observable<number | null>;
 
   questionsForm!: FormGroup;
   questionIndex: number = 0
@@ -33,7 +34,7 @@ export class QuizzesComponent implements OnInit {
   ) { 
     this.quiz$ = this.quizService.quiz$;
     this.elapsedMinutes = this.timeService.getElapsedTimeInMinutes();
-
+    this.remainingMinutes = this.timeService.getRemainingTimeInMinutes();
     this.timeService.getElapsedTimeInMinutes().subscribe(minutes => this.duration = minutes);
 
     this.questionsForm = this.fb.group({});
@@ -53,8 +54,30 @@ export class QuizzesComponent implements OnInit {
   ngOnInit(): void {
     this.id = +this.activatedRoute.snapshot.paramMap.get('id')!;
     this.quizService.show(this.id).subscribe(() => {
-      this.timerSubscription = this.timeService.startTimer().subscribe();
+      this.timerSubscription = this.timeService.startTimer(this.id === 3 ? 30 : undefined).subscribe();
     });
+
+    if (this.id === 3) {
+      this.timeService.getRemainingTimeInMinutes().subscribe(minutes => {
+        if (minutes === 0) {
+          this.questionsForm.disable();
+          this.quizService.submit(this.id, this.questionsForm.value, this.duration).subscribe();
+          Swal.fire({
+            title: "It looks like you've run out of time. If you still can't get the correct answers, you can always come back later!",
+            icon: 'warning',
+            confirmButtonText: 'Try Again',
+            showDenyButton: false,
+            allowEscapeKey: false,
+            allowOutsideClick: false
+          }).then(result => {
+            if (result.isConfirmed) {
+              this.router.navigate(['/quiz']);
+              Swal.close();
+            }
+          });
+        }
+      });
+    }
   }
 
   select(index: number) {
@@ -85,19 +108,31 @@ export class QuizzesComponent implements OnInit {
         denyButtonText: 'No'
       }).then(result => {
         if (result.isConfirmed) {
-          this.quizService.submit(this.id, this.questionsForm.value, this.duration).subscribe();
+          this.quizService.submit(this.id, this.questionsForm.value, this.duration).subscribe(
+            () => {
+              this.router.navigate(['/quiz']);
+            }
+          );
           Swal.close();
         } else {
           Swal.close();
         }
       });
     } else {
-      this.quizService.submit(this.id, this.questionsForm.value, this.duration).subscribe();
+      this.quizService.submit(this.id, this.questionsForm.value, this.duration).subscribe(
+        () => {
+          this.router.navigate(['/quiz']);
+        }
+      );
     }
 
     if (this.timerSubscription) {
       this.timerSubscription.unsubscribe(); // Clean up the subscription
     }
+  }
+
+  ngOnDestroy(): void {
+    this.timerSubscription.unsubscribe(); // Clean up the subscription
   }
 
   private createQuestion(question: Question) {

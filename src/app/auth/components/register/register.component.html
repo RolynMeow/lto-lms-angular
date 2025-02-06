@@ -2,14 +2,20 @@
     <ngb-alert *ngIf="invalidLogin" #alert [type]="'danger'" (closed)="invalidLogin = false">
         <strong>Warning!</strong> {{ errorMessage }}.
     </ngb-alert>
-    <form [formGroup]="userForm">
+    <form [formGroup]="userForm" (ngSubmit)="submit()">
         <div class="d-flex flex-column w-100 gap-3">
             <input type="string" class="form-control form-control-solid form-control-lg" 
                 [ngClass]="{ 'is-invalid' : invalidLogin }"
                 formControlName="username" placeholder="Username">
             <input type="email" class="form-control form-control-solid form-control-lg" 
                 [ngClass]="{ 'is-invalid' : invalidLogin }"
-                formControlName="username" placeholder="Email">
+                formControlName="email" placeholder="Email">
+            <input type="string" class="form-control form-control-solid form-control-lg" 
+                [ngClass]="{ 'is-invalid' : invalidLogin }"
+                formControlName="first_name" placeholder="First Name">
+            <input type="string" class="form-control form-control-solid form-control-lg" 
+                [ngClass]="{ 'is-invalid' : invalidLogin }"
+                formControlName="last_name" placeholder="Last Name">
             <input type="password" class="form-control form-control-solid form-control-lg" 
                 [ngClass]="{ 'is-invalid' : invalidLogin }"
                 formControlName="password" placeholder="Password">

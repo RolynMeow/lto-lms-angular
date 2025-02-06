@@ -1,10 +1,10 @@
 <h1 class="fw-bold font-monospace px-5">Quiz</h1>
 <div class="row g-5 px-5" *ngIf="quiz$ | async as quiz">
     <div class="col-5 d-flex flex-column gap-5">
-        <div class="card rounded-4" style="width: 400px; height: 255px;">
+        <div class="card rounded-4" style="width: 400px;">
             <div class="card-body p-5">
                 <span class="fs-3 text-success fw-bold">{{ quiz.title }}</span>
-                <p class="truncate-two-lines">
+                <p>
                     {{ quiz.description }}
                 </p>
             </div>
@@ -26,8 +26,8 @@
                 <hr class="my-4">
                 <div class="d-flex align-items-center justify-content-around">
                     <div class="d-flex flex-column">
-                        <span class="fs-3 fw-bold font-monospace">Time Elapsed:</span>
-                        <span class="fs-5 fw-semibold">{{ elapsedMinutes | async }} minutes</span>
+                        <span class="fs-3 fw-bold font-monospace">{{ id !== 3 ? 'Time Elapsed' : 'Timer' }}:</span>
+                        <span class="fs-5 fw-semibold">{{ (id !== 3 ? elapsedMinutes : remainingMinutes) | async }} minutes</span>
                     </div>
                     <img src="./assets/clock.png" width="65" height="65" class="img-fluid" alt="clock">
                 </div>
@@ -35,7 +35,7 @@
         </div>
     </div>
     <div class="col-7">
-        <div class="card rounded-4 w-100 h-100">
+        <div class="card rounded-4 w-100">
             <div class="card-body user-select-none p-5">
                 <div class="d-flex flex-row justify-content-around align-items-center my-3 fw-semibold">
                     <span (click)="prev()" role="button" class="d-flex align-items-center gap-2 fs-5" [ngClass]="{ 'text-muted' : questionIndex === 0 }">
@@ -61,16 +61,16 @@
                 </div>
                 <div *ngIf="quiz.questions[questionIndex] as question" 
                     class="card rounded-4 position-relative" 
-                    style="background-color: #FFFAE7; max-height: 530px;"
+                    style="background-color: #FFFAE7;"
                 >
                     <div class="card-body p-5">
-                        <div *ngIf="question.image" class="d-flex justify-content-center align-items-center">
+                        <div *ngIf="question.image" class="d-flex justify-content-center align-items-center m-5">
                             <img [src]="question.image" height="175" width="175" alt="Question Image">
                         </div>
                         <span class="badge bg-dark fs-6 font-monospace"> {{ question.category | titlecase }} </span>
                         <p class="lh-base my-2">{{ question.question }}</p>
                         <form [formGroup]="questionsForm" class="my-2">
-                            <div class="d-flex flex-column flex-wrap" style="height: 250px;">
+                            <div class="d-flex flex-column flex-wrap">
                                 <div class="form-check d-flex align-items-center gap-2" *ngFor="let choice of question.choices; let i = index">
                                     <input class="form-check-input" type="radio" [formControlName]="question.id.toString()" [value]="choice.id" [id]="'radio-' + i">
                                     <label class="form-check-label" [for]="'radio-' + i">

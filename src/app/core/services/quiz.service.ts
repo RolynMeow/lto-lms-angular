@@ -59,7 +59,6 @@ export class QuizService {
         console.error(err);
         return throwError(err);
       }),
-      finalize(() => this.router.navigate(['/quiz']))
     )
 
   }

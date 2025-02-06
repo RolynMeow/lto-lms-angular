@@ -21,7 +21,7 @@ export class UserDetailsComponent implements OnInit {
     first_name: new FormControl(null, Validators.required),
     last_name: new FormControl(null, Validators.required),
     profile_picture: new FormControl(null, Validators.min(6)),
-    address: new FormControl(null, Validators.required),
+    address: new FormControl(null),
   });
 
   badges$!: Observable<Badge[]>;
@@ -71,7 +71,7 @@ export class UserDetailsComponent implements OnInit {
   update() {
     const formValue = this.userForm.value;
     const cleanedValue = Object.fromEntries(
-      Object.entries(formValue).filter(([key, value]) => value !== null || value !== '')
+      Object.entries(formValue).filter(([key, value]) => value !== null && value !== '')
     );
     this.profileService.update(cleanedValue).subscribe();
     this.patch();

@@ -3,7 +3,6 @@
     <div
         *ngFor="let module of modules$ | async; let i = index" 
         class="card card-xxl-stretch rounded-4 user-select-none"
-        style="height: 250px;"
         role="button"
         (click)="show(module.id, $event)"
     >
@@ -14,7 +13,7 @@
                 </div>
                 <div class="col-4 d-flex flex-column">
                     <h2 class="card-title fw-bold truncate-two-lines">{{module.title}}</h2>
-                    <div class="text-truncate lh-base w-75" style=" height: 75px;">
+                    <div class="lh-base w-75">
                         {{module.description}}
                     </div>
                 </div>
