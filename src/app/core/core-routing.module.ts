@@ -6,6 +6,7 @@ import { QuizComponent } from './pages/quiz/quiz.component';
 import { ModulesComponent } from './pages/modules/modules.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { FeedbackComponent } from './pages/feedback/feedback.component';
+import { AdminComponent } from './pages/admin/admin.component';
 
 const routes: Routes = [
   {
@@ -31,6 +32,14 @@ const routes: Routes = [
       {
         path: 'feedback',
         component: FeedbackComponent
+      },
+      {
+        path: 'admin',
+        component: AdminComponent
+      },
+      {
+        path: '**',
+        redirectTo: ''
       }
     ]
   }

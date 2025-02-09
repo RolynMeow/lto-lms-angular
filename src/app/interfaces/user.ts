@@ -38,6 +38,7 @@ export interface User {
     google_id: string | null;
     profile_picture: string | null;
     address: string | null;
+    role: string | null;
     created_at: string;
     updated_at: string;
     history: History[];

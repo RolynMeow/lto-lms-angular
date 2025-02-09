@@ -54,7 +54,7 @@ export class QuizzesComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.id = +this.activatedRoute.snapshot.paramMap.get('id')!;
     this.quizService.show(this.id).subscribe(() => {
-      this.timerSubscription = this.timeService.startTimer(this.id === 3 ? 30 : undefined).subscribe(res => 
+      this.timerSubscription = this.timeService.startTimer(this.id === 3 ? 11 : undefined).subscribe(res => 
         {
           if (this.id === 3) {
             this.timeService.getRemainingTimeInMinutes().subscribe(minutes => {

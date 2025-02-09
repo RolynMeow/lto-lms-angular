@@ -19,6 +19,8 @@ import { UserDetailsComponent } from './pages/profile/components/user-details/us
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgApexchartsModule } from 'ng-apexcharts';
 import { NgbNavModule, NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
+import { AdminComponent } from './pages/admin/admin.component';
+import { ViewModalComponent } from './pages/admin/components/view-modal/view-modal.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +33,8 @@ import { NgbNavModule, NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
     EngagementsComponent,
     ContentHoursComponent,
     UserDetailsComponent,
+    AdminComponent,
+    ViewModalComponent,
   ],
   imports: [
     CommonModule,
