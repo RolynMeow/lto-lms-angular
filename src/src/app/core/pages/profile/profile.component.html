@@ -1,0 +1,129 @@
+<div class="main-content-container">
+    <div class="d-flex align-items-center justify-content-center w-1000 p-100">
+        <div class="card rounded-4 frosted-glass me-50" style="width: 1060px;">
+            <div class="card-body p-4">
+                <div class="px-5 py-3">
+                    <div class="profile-container">
+                        <div class="row gx-4 gy-4 px-5">
+
+        <div class="col-4">
+            <leaderboard></leaderboard>
+        </div>
+        <div class="col-4">
+            <engagements></engagements>
+        </div>
+        <div class="col-4">
+            <content-hours></content-hours>
+        </div>
+        <div class="col-12">
+            <user-details></user-details>
+        </div>
+
+        <div class="col-12">
+            <h1 class="fw-semibold">Progress</h1>
+            <div class="row justify-content-center gap-4">
+                <div class="col-md-3 d-flex justify-content-center" *ngFor="let module of (modules$ | async)?.slice(0,3); let i = index">
+                    <div class="card rounded-4 shadow-sm border-0 frosted-glass" style="width: 250px;">
+                        <div class="card-body text-center">
+                            <span class="fs-4 fw-semibold d-block text-truncate w-100">{{ module.title }}</span>
+                            <div class="d-flex justify-content-center">
+                                <apx-chart
+                                    [series]="chartOptions[i].series"
+                                    [colors]="chartOptions[i].colors"
+                                    [chart]="chartOptions[i].chart"
+                                    [labels]="chartOptions[i].labels"
+                                    [plotOptions]="chartOptions[i].plotOptions"
+                                    [dataLabels]="chartOptions[i].dataLabels"
+                                    [legend]="chartOptions[i].legend"
+                                ></apx-chart>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12">
+            <div class="card frosted-glass rounded-4 shadow-sm w-100">
+                <div class="card-body p-4 w-100">
+                    <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+                        <li [ngbNavItem]="1">
+                            <button ngbNavLink>Activity History</button>
+                            <ng-template ngbNavContent>
+                                <div class="table-responsive">
+                                    <table class="table table-hover table-striped gx-5 gy-5">
+                                        <thead class="text-muted fs-7">
+                                            <tr>
+                                                <th style="width: 450px;">Quiz Name</th>
+                                                <th>Date Taken</th>
+                                                <th>Duration</th>
+                                                <th>Score</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="table-group-divider fs-6" *ngIf="activityHistory$ | async as activities">
+                                            <ng-container *ngIf="activities.length > 0; else noActivity">
+                                                <tr *ngFor="let activity of activities">
+                                                    <td>
+                                                        <div class="d-flex align-items-center gap-3">
+                                                            <img [src]="activity.activity.image || 'https://pngimg.com/d/question_mark_PNG99.png'" height="50" width="50" alt="activity_picture">
+                                                            <span class="ms-2 fw-semibold">{{ activity.activity.title }}</span>
+                                                        </div>
+                                                    </td>
+                                                    <td>{{ activity.created_at }}</td>
+                                                    <td>{{ activity.duration }} minutes</td>
+                                                    <td>{{ activity.score }} points</td>
+                                                </tr>
+                                            </ng-container>
+                                            <ng-template #noActivity>
+                                                <tr>
+                                                    <td colspan="5" class="text-center">No Activity History found.</td>
+                                                </tr>
+                                            </ng-template>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </ng-template>
+                        </li>
+                        <li [ngbNavItem]="2">
+                            <button ngbNavLink>Bookmarks</button>
+                            <ng-template ngbNavContent>
+                               <div class="table-responsive">
+                                    <table class="table table-hover table-striped gx-5 gy-5">
+                                        <thead class="text-muted fs-7">
+                                            <tr>
+                                                <th style="width: 450px;">Module Name</th>
+                                                <th>Date</th>
+                                                <th>Page</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="table-group-divider fs-6" *ngIf="bookmarks$ | async as bookmarks">
+                                            <ng-container *ngIf="bookmarks.length > 0; else noBookmarks">
+                                                <tr *ngFor="let bookmark of bookmarks">
+                                                    <td>
+                                                        <div class="d-flex align-items-center gap-3">
+                                                            <img [src]="bookmark.module.image || 'https://pngimg.com/d/question_mark_PNG99.png'" height="50" width="50" alt="module_picture">
+                                                            <span class="ms-2 fw-semibold">{{ bookmark.module.title }}</span>
+                                                        </div>
+                                                    </td>
+                                                    <td>{{ bookmark.created_at }}</td>
+                                                    <td>{{ bookmark.viewed_lessons }}/{{ bookmark.total_lessons }}</td>
+                                                </tr>
+                                            </ng-container>
+                                            <ng-template #noBookmarks>
+                                                <tr>
+                                                    <td colspan="5" class="text-center">No Bookmarks found.</td>
+                                                </tr>
+                                            </ng-template>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </ng-template>
+                        </li>
+                    </ul>
+                    <div [ngbNavOutlet]="nav" class="mt-2"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

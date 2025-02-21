@@ -1,0 +1,244 @@
+<!-- Falling Images Background -->
+<div class="falling-images"> 
+    <img src="./assets/1.png" class="falling-image" alt="Falling Image 1">
+    <img src="./assets/2.png" class="falling-image" alt="Falling Image 2">
+    <img src="./assets/3.png" class="falling-image" alt="Falling Image 3">
+    <img src="./assets/4.png" class="falling-image" alt="Falling Image 4">
+    <img src="./assets/5.png" class="falling-image" alt="Falling Image 5">
+    <img src="./assets/6.png" class="falling-image" alt="Falling Image 6">
+    <img src="./assets/7.png" class="falling-image" alt="Falling Image 7">
+    <img src="./assets/8.png" class="falling-image" alt="Falling Image 8">
+    <img src="./assets/9.png" class="falling-image" alt="Falling Image 9">
+    <img src="./assets/10.png" class="falling-image" alt="Falling Image 10">
+    <img src="./assets/11.png" class="falling-image" alt="Falling Image 11">
+    <img src="./assets/12.png" class="falling-image" alt="Falling Image 12">
+    <img src="./assets/13.png" class="falling-image" alt="Falling Image 13">
+    <img src="./assets/14.png" class="falling-image" alt="Falling Image 14">
+    <img src="./assets/15.png" class="falling-image" alt="Falling Image 15">
+    <img src="./assets/16.png" class="falling-image" alt="Falling Image 16">
+    <img src="./assets/17.png" class="falling-image" alt="Falling Image 17">
+    <img src="./assets/18.png" class="falling-image" alt="Falling Image 18">
+    <img src="./assets/19.png" class="falling-image" alt="Falling Image 19">
+    <img src="./assets/20.png" class="falling-image" alt="Falling Image 20">
+</div>
+
+<style>
+    /* Falling images container */
+    .falling-images {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    pointer-events: auto;
+}
+
+.falling-image {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    opacity: 0.9;
+    animation: fallAnimation linear infinite;
+    transition: transform 0.5s ease-out;
+}
+
+    /* Randomized positions and durations for all 20 images */
+    .falling-image:nth-child(1) { left: 2%; animation-duration: 6s, 3s; animation-delay: 0s; }
+    .falling-image:nth-child(2) { left: 8%; animation-duration: 8s, 2.5s; animation-delay: 1s; }
+    .falling-image:nth-child(3) { left: 12%; animation-duration: 5s, 4s; animation-delay: 2s; }
+    .falling-image:nth-child(4) { left: 18%; animation-duration: 7s, 3.5s; animation-delay: 1.5s; }
+    .falling-image:nth-child(5) { left: 22%; animation-duration: 6s, 2s; animation-delay: 2.5s; }
+    .falling-image:nth-child(6) { left: 28%; animation-duration: 9s, 3s; animation-delay: 0.5s; }
+    .falling-image:nth-child(7) { left: 34%; animation-duration: 5.5s, 2.8s; animation-delay: 1.2s; }
+    .falling-image:nth-child(8) { left: 40%; animation-duration: 8.5s, 3.3s; animation-delay: 2.8s; }
+    .falling-image:nth-child(9) { left: 46%; animation-duration: 7.2s, 2.9s; animation-delay: 1.8s; }
+    .falling-image:nth-child(10) { left: 52%; animation-duration: 6.8s, 3.1s; animation-delay: 0.8s; }
+    .falling-image:nth-child(11) { left: 58%; animation-duration: 9.5s, 3.2s; animation-delay: 1.3s; }
+    .falling-image:nth-child(12) { left: 64%; animation-duration: 7.1s, 2.7s; animation-delay: 0.7s; }
+    .falling-image:nth-child(13) { left: 70%; animation-duration: 6.4s, 3.6s; animation-delay: 2.1s; }
+    .falling-image:nth-child(14) { left: 76%; animation-duration: 8.9s, 3.4s; animation-delay: 1.9s; }
+    .falling-image:nth-child(15) { left: 82%; animation-duration: 7.6s, 2.8s; animation-delay: 0.9s; }
+    .falling-image:nth-child(16) { left: 86%; animation-duration: 5.9s, 2.2s; animation-delay: 2.4s; }
+    .falling-image:nth-child(17) { left: 90%; animation-duration: 6.2s, 3.7s; animation-delay: 1.6s; }
+    .falling-image:nth-child(18) { left: 94%; animation-duration: 8.3s, 3s; animation-delay: 0.4s; }
+    .falling-image:nth-child(19) { left: 97%; animation-duration: 7.8s, 2.5s; animation-delay: 1.7s; }
+    .falling-image:nth-child(20) { left: 99%; animation-duration: 9.2s, 3.8s; animation-delay: 0.6s; }
+
+    /* Falling animation */
+    @keyframes fallAnimation {
+        0% { transform: translateY(-10vh) rotate(0deg); opacity: 0; }
+        50% { opacity: 1; }
+        100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* Sway animation for smooth movement */
+    @keyframes swayAnimation {
+        0% { transform: translateX(0px); }
+        50% { transform: translateX(10px); }
+        100% { transform: translateX(-10px); }
+    }
+
+    /* Falling animation */
+    @keyframes fallAnimation {
+        0% { transform: translateY(-10vh) rotate(0deg); opacity: 0; }
+        50% { opacity: 1; }
+        100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* Layout */
+    .container {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        padding: 0 5%;
+        gap: 40px;
+    }
+
+    /* Left Side: Description */
+    .content-container {
+        max-width: 600px;
+        flex: 1;
+        text-align: left;
+    }
+
+    .logo-container img {
+        width: 200px;
+        height: auto;
+    }
+
+    .main-title {
+        font-size: 42px;
+        font-weight: bold;
+        color: #002F6C;
+    }
+
+    .main-subtitle {
+        font-size: 20px;
+        font-weight: bold;
+        color: #002F6C;
+        margin-bottom: 20px;
+    }
+
+    .main-text {
+        font-size: 16px;
+        line-height: 1.5;
+        color: #1a1a1a;
+        margin-bottom: 15px;
+    }
+
+    /* Right Side: Login Box */
+    .auth-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 400px;
+        max-width: 90%;
+    }
+
+    .frosted-glass {
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
+        box-shadow: 0px 8px 32px rgba(0, 0, 0, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        padding: 20px;
+        width: 100%;
+        text-align: center;
+        border-radius: 15px;
+    }
+
+    /* ✅ FULL RESPONSIVENESS FIXED ✅ */
+    @media (max-width: 1024px) {
+        .container {
+            flex-direction: column;
+            text-align: center;
+            gap: 20px;
+        }
+
+        .content-container {
+            max-width: 100%;
+        }
+
+        .auth-container {
+            width: 100%;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .main-title {
+            font-size: 32px;
+        }
+
+        .main-subtitle {
+            font-size: 18px;
+        }
+
+        .main-text {
+            font-size: 14px;
+        }
+
+        .logo-container img {
+            width: 150px;
+        }
+
+        .falling-image {
+            width: 8vw;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .container {
+            padding: 20px;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .main-title {
+            font-size: 28px;
+        }
+
+        .main-subtitle {
+            font-size: 16px;
+        }
+
+        .main-text {
+            font-size: 12px;
+        }
+
+        .frosted-glass {
+            padding: 15px;
+        }
+
+        .falling-image {
+            width: 10vw;
+        }
+    }
+</style>
+
+<div class="container">
+    <!-- Left Side: Description -->
+    <div class="content-container">
+        <div class="logo-container">
+            <img src="./assets/Icons.gif" alt="Logo Placeholder">
+        </div>
+        <h1 class="main-title">Sign Seeker: Your Ultimate Road Sign Learning Adventure!</h1>
+        <p class="main-subtitle">Master Philippine Road Signs with Fun & Interactive Learning!</p>
+        <p class="main-text">
+            Get ready to turn road safety education into an exciting experience! Sign Seeker is an interactive learning platform designed to make mastering Philippine road signs easy, engaging, and fun.
+        </p>
+        <p class="main-text">
+            With gamified quizzes, real-life driving scenarios, and instant feedback, you’ll gain the knowledge you need to navigate the roads with confidence. Whether you're a new driver, a student, or simply want to improve your road safety awareness, Sign Seeker is here to guide you—one sign at a time!
+        </p>
+    </div>
+
+    <!-- Right Side: Frosted Glass Login/Auth Box -->
+    <div class="auth-container">
+        <div class="card frosted-glass">
+            <div class="card-body">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+</div>

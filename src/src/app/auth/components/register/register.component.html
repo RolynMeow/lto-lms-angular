@@ -1,0 +1,36 @@
+<div class="m-3">
+    
+    <ngb-alert *ngIf="invalidLogin" #alert [type]="'danger'" (closed)="invalidLogin = false">
+        <strong>Warning!</strong> {{ errorMessage }}.
+    </ngb-alert>
+    <form [formGroup]="userForm" (ngSubmit)="submit()">
+        <div class="d-flex flex-column w-100 gap-3">
+            <input type="text" class="form-control form-control-solid form-control-lg" 
+                [ngClass]="{ 'is-invalid' : invalidLogin }"
+                formControlName="username" placeholder="Username">
+            <input type="email" class="form-control form-control-solid form-control-lg" 
+                [ngClass]="{ 'is-invalid' : invalidLogin }"
+                formControlName="email" placeholder="Email">
+            <input type="text" class="form-control form-control-solid form-control-lg" 
+                [ngClass]="{ 'is-invalid' : invalidLogin }"
+                formControlName="first_name" placeholder="First Name">
+            <input type="text" class="form-control form-control-solid form-control-lg" 
+                [ngClass]="{ 'is-invalid' : invalidLogin }"
+                formControlName="last_name" placeholder="Last Name">
+            <input type="password" class="form-control form-control-solid form-control-lg" 
+                [ngClass]="{ 'is-invalid' : invalidLogin }"
+                formControlName="password" placeholder="Password">
+        </div>
+        <div class="d-flex flex-column w-100 gap-3 my-3">
+            <button type="submit" [disabled]="userForm.invalid" class="w-100 btn btn-info mt-4 animated-button">
+                Register
+                <span class="ripple"></span>
+            </button>
+            <span class="text-muted text-center fs-6"> Or continue with</span>
+            <google-button [type]="'register'" (response)="invalidLogin = true; errorMessage = $event"></google-button>
+            <google-button [type]="'login'" (response)="invalidLogin = true; errorMessage = $event"></google-button>
+        </div>
+    </form>
+</div>
+
+
